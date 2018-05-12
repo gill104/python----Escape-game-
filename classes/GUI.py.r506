@@ -1,0 +1,91 @@
+import pygame
+from config import globals as G
+from classes import player as P
+class GUI:
+    def __init__(self):
+        self.myfont = pygame.font.SysFont("monospace", 25)
+        self.imgback = pygame.image.load(G._ASSET_DIR + "sidebarthingyNOTFINISHED.png")
+
+
+#   setting the images into a surface, not sure if there is a more efficient way of doing this
+    def get_img_danger(self):
+        One_Img = pygame.image.load(G._ASSET_DIR+G._Danger).convert_alpha()
+        self.size = [int(x*0.9) for x in One_Img.get_size()]
+        self.img = pygame.transform.scale(One_Img, self.size)
+        return self.img
+
+    def get_img_one(self):
+        One_Img = pygame.image.load(G._ASSET_DIR+G._Number_One).convert_alpha()
+        self.size = [int(x*0.5) for x in One_Img.get_size()]
+        self.img = pygame.transform.scale(One_Img, self.size)
+        return self.img
+
+    def get_img_two(self):
+       One_Img = pygame.image.load(G._ASSET_DIR+G._Number_Two).convert_alpha()
+       self.size = [int(x*0.5) for x in One_Img.get_size()]
+       self.img = pygame.transform.scale(One_Img, self.size)
+       return self.img
+
+    def get_img_three(self):
+       One_Img = pygame.image.load(G._ASSET_DIR+G._Number_Three).convert_alpha()
+       self.size = [int(x*0.5) for x in One_Img.get_size()]
+       self.img = pygame.transform.scale(One_Img, self.size)
+       return self.img
+
+    def get_img_four(self):
+       One_Img = pygame.image.load(G._ASSET_DIR+G._Number_Four).convert_alpha()
+       self.size = [int(x*0.5) for x in One_Img.get_size()]
+       self.img = pygame.transform.scale(One_Img, self.size)
+       return self.img
+
+    def get_img_five(self):
+       One_Img = pygame.image.load(G._ASSET_DIR+G._Number_Five).convert_alpha()
+       self.size = [int(x*0.5) for x in One_Img.get_size()]
+       self.img = pygame.transform.scale(One_Img, self.size)
+       return self.img
+
+   #shows the upgrades in a circle (will be replaced with upgrade icon), and shows # of that specific upgrade
+    def ifGotten_upgrades(self,screen):
+        if G._SHOT_UPGRADES == 0:
+            #print "SHOOTING REGULAR"
+            wer = self.get_img_danger()
+            pygame.draw.circle(screen,(0,255,0),(25,500),10)
+            screen.blit(wer,(25,500))
+
+        if G._SHOT_UPGRADES == 1:
+            #print "SHOOTING SECOND"
+            wer = self.get_img_one()
+            pygame.draw.circle(screen,(0,255,0),(25,500),10)
+            screen.blit(wer,(25,500))
+
+        if G._SHOT_UPGRADES == 2:
+            #print "SHOOTING SECOND"
+            wer = self.get_img_two()
+            pygame.draw.circle(screen,(0,255,0),(25,500),10)
+            screen.blit(wer,(25,500))
+
+        if G._SHOT_UPGRADES == 3:
+            #print "SHOOTING SECOND"
+            wer = self.get_img_three()
+            pygame.draw.circle(screen,(0,255,0),(25,500),10)
+            screen.blit(wer,(25,500))
+
+        if G._SHOT_UPGRADES == 4:
+            #print "SHOOTING SECOND"
+            wer = self.get_img_four()
+            pygame.draw.circle(screen,(0,255,0),(25,500),10)
+            screen.blit(wer,(25,500))
+
+        if G._SHOT_UPGRADES == 5:
+            #print "SHOOTING SECOND"
+            wer = self.get_img_five()
+            pygame.draw.circle(screen,(0,255,0),(25,500),10)
+            screen.blit(wer,(25,500))
+               
+    #draws on the screen        
+    def draw(self, screen):
+        label = self.myfont.render("Score: " + str(G._SCORE), 1, (255,255,0))
+        sidebar = pygame.draw.rect(screen,(91,91,91),pygame.Rect(0,0,G._GUI_WIDTH,G._SCREEN_WIDTH),0)
+        #screen.blit(self.imgback, (0,0))
+        screen.blit(label, (10, 50))
+        self.ifGotten_upgrades(screen)

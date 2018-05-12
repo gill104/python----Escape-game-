@@ -1,0 +1,80 @@
+import pygame
+from config import globals as G
+from classes import player as P
+
+class GUI:
+    def __init__(self):
+        self.myfont = pygame.font.SysFont("monospace", 25)
+        self.colorG = 255
+        self.show_img = False
+        self.frames = 0
+
+#   corrected this, now it takes in an array for the images to be loaded
+    def get_img(self, x):
+        The_img = pygame.image.load(G._ASSET_DIR+G._WEAPONTYPE[x]).convert_alpha()
+        self.size = [int(x*1) for x in The_img.get_size()]
+        self.img = pygame.transform.scale(The_img, self.size)
+        return self.img
+
+    def draw_first_upgrade(self,screen,wer):
+        pygame.draw.circle(screen,(0,255,0),(25,500),10)
+        screen.blit(wer,(25,500))
+
+   #made the blinking work when player has no upgrades
+    def ifGotten_upgrades(self,screen,delta):
+        if G._SHOT_UPGRADES == 0:
+            #print "SHOOTING REGULAR"
+            self.frames += delta
+            #print self.frames
+            wer = self.get_img(0)
+
+            if self.show_img:
+                #pygame.draw.circle(screen,(91,91,91),(25,500),10)
+                screen.blit(wer,(25,500))
+                if self.frames > 400:
+                    self.frames = 0
+                    self.show_img = False
+            else:
+                if self.frames > 200:
+                    #pygame.draw.circle(screen,(91,91,91),(25,500),10)
+                    screen.blit(wer,(25,500))
+                    self.show_img = True
+
+        elif G._SHOT_UPGRADES == 1:
+            #print "SHOOTING SECOND"
+            wer = self.get_img(1)
+            self.draw_first_upgrade(screen,wer)
+
+        elif G._SHOT_UPGRADES == 2:
+            #print "SHOOTING SECOND"
+            wer = self.get_img(2)
+            self.draw_first_upgrade(screen,wer)
+
+        elif G._SHOT_UPGRADES == 3:
+            #print "SHOOTING SECOND"
+            wer = self.get_img(3)
+            self.draw_first_upgrade(screen,wer)
+
+        elif G._SHOT_UPGRADES == 4:
+            #print "SHOOTING SECOND"
+            wer = self.get_img(4)
+            self.draw_first_upgrade(screen,wer)
+
+        elif G._SHOT_UPGRADES == 5:
+            #print "SHOOTING SECOND"
+            wer = self.get_img(5)
+            self.draw_first_upgrade(screen,wer)
+    def ifGotten_Sheild(self,screen):
+
+        pass
+    def ifGotten_Bomb(self, screen):
+
+        pass          
+              
+    #draws on the screen        
+    def draw(self, screen, delta):
+        label = self.myfont.render("Score: " + str(G._SCORE), 1, (255,255,0))
+        sidebar = pygame.draw.rect(screen,(91,91,91),pygame.Rect(0,0,G._GUI_WIDTH,G._SCREEN_WIDTH),0)
+        #screen.blit(self.imgback, (0,0))
+        screen.blit(label, (10, 50))
+        self.ifGotten_upgrades(screen, delta)

@@ -1,0 +1,24 @@
+import pygame
+from config import globals as G
+from classes import player as P
+class GUI:
+    def __init__(self):
+        self.myfont = pygame.font.SysFont("monospace", 25)
+        self.imgback = pygame.image.load(G._ASSET_DIR + "sidebarthingyNOTFINISHED.png")
+
+
+   #shows the upgrades in a circle (will be replaced with upgrade icon), and shows # of that specific upgrade
+    def showUpgrades(self,screen):
+        img = pygame.image.load(G._ASSET_DIR + str(G._SHOT_UPGRADES) + ".png")
+        size = [int(x*0.5) for x in img.get_size()]
+        img = pygame.transform.scale(img, size)
+        pygame.draw.circle(screen, (0,255,0), (25,500),10)
+        screen.blit(img, (25,500))
+      
+    #draws on the screen        
+    def draw(self, screen):
+        label = self.myfont.render("Score: " +   str(G._SCORE), 1, (255,255,0))
+        sidebar = pygame.draw.rect(screen,(91,91,91),pygame.Rect(0,0,G._GUI_WIDTH,G._SCREEN_WIDTH),0)
+        #screen.blit(self.imgback, (0,0))
+        screen.blit(label, (10, 50))
+        self.showUpgrades(screen)
